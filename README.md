@@ -1,3 +1,3 @@
 # gtr
 
-## A command line application for begginer guitarists
+## A command line application for beginner guitarists
