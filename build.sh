@@ -13,6 +13,11 @@ sources=(
     "src/StrNotes.java"
     "src/WhichNote.java"
     "src/Menu.java"
+    "src/fretboard/Fretboard.java"
+    "src/fretboard/GString.java"
+    "src/fretboard/Note.java"
+    "src/fretboard/NoteType.java"
+    "src/fretboard/StringType.java"
 )
 
 javac ${sources[@]} -d out
