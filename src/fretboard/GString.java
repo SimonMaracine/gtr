@@ -13,6 +13,15 @@ public class GString {
         return type;
     }
 
+    public void print(StringBuilder result, int stringHeaderLength) {
+        result.append(type.toString());
+        printPadding(result, stringHeaderLength);
+        for (int i = 0; i <= Fretboard.FRET_COUNT; i++) {
+            printFret(result, i);
+        }
+        result.append('\n');
+    }
+
     public ArrayList<Note> getNotes() {
         ArrayList<Note> notes = new ArrayList<>();
 
@@ -56,6 +65,22 @@ public class GString {
         }
 
         return notes;
+    }
+
+    private void printFret(StringBuilder result, int index) {
+        if (index > 0) {
+            for (int i = 0; i < Fretboard.FRET_COUNT - index + 3; i++) {
+                result.append(".");
+            }
+        }
+
+        result.append("|");
+    }
+
+    private void printPadding(StringBuilder result, int stringHeaderLength) {
+        for (int i = 0; i < stringHeaderLength - type.toString().length(); i++) {
+            result.append(" ");
+        }
     }
 
     private void calculate(ArrayList<Note> notes, NoteType lastNoteType) {

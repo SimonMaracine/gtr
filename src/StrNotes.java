@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import application.Command;
 import fretboard.Fretboard;
+import fretboard.StringType;
 
 public class StrNotes extends Command {
     StrNotes() {
@@ -13,6 +14,7 @@ public class StrNotes extends Command {
         validateArgs(args);
 
         Fretboard fretboard = new Fretboard();
-        System.out.println(fretboard.printFretboard());
+        // System.out.println(fretboard.print());
+        System.out.println(fretboard.printStrNotes(StringType.Si));
     }
 }

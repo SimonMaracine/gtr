@@ -18,55 +18,33 @@ public class Fretboard {
         stringHeaderLength = getStringHeaderLength();
     }
 
-    public String printFretboard() {
-        StringBuilder result = new StringBuilder();
+    public String print() {
+        return printEmptyBoard().toString();
+    }
 
-        result.append(firstString.getType().toString());
-        printPadding(result, firstString.getType());
-        for (int i = 0; i <= FRET_COUNT; i++) {
-            printFret(result, i);
-        }
-        result.append('\n');
+    public String printStrNotes(StringType string) {
+        StringBuilder result = printEmptyBoard();
 
-        result.append(secondString.getType().toString());
-        printPadding(result, secondString.getType());
-        for (int i = 0; i <= FRET_COUNT; i++) {
-            printFret(result, i);
-        }
-        result.append('\n');
+        var notes = strNotes(string);
 
-        result.append(thirdString.getType().toString());
-        printPadding(result, thirdString.getType());
-        for (int i = 0; i <= FRET_COUNT; i++) {
-            printFret(result, i);
-        }
-        result.append('\n');
+        for (Note note : notes) {
+            int index = 0;
+            index += stringNumber(note.string()) * stringHeaderLength;
+            index += note.fret() * Fretboard.FRET_COUNT;
+            index += (stringNumber(note.string()) - 1) * Fretboard.FRET_COUNT * (Fretboard.FRET_COUNT + 3);
+            index += note.fret() * (Fretboard.FRET_COUNT - 1);
 
-        result.append(fourthString.getType().toString());
-        printPadding(result, fourthString.getType());
-        for (int i = 0; i <= FRET_COUNT; i++) {
-            printFret(result, i);
+            result.setCharAt(index, note.note().toString().charAt(0));
         }
-        result.append('\n');
-
-        result.append(fifthString.getType().toString());
-        printPadding(result, fifthString.getType());
-        for (int i = 0; i <= FRET_COUNT; i++) {
-            printFret(result, i);
-        }
-        result.append('\n');
-
-        result.append(sixthString.getType().toString());
-        printPadding(result, sixthString.getType());
-        for (int i = 0; i <= FRET_COUNT; i++) {
-            printFret(result, i);
-        }
-        result.append('\n');
 
         return result.toString();
     }
 
-    public ArrayList<Note> strNotes(StringType string) {
+    public String printAllNotes() {
+        return null;
+    }
+
+    private ArrayList<Note> strNotes(StringType string) {
         switch (string) {
             case MiH:
                 return firstString.getNotes();
@@ -86,7 +64,7 @@ public class Fretboard {
         }
     }
 
-    public ArrayList<Note> allNotes() {
+    private ArrayList<Note> allNotes() {
         ArrayList<Note> notes = new ArrayList<>();
 
         notes.addAll(firstString.getNotes());
@@ -99,19 +77,36 @@ public class Fretboard {
         return notes;
     }
 
-    private void printFret(StringBuilder result, int index) {
-        if (index > 0) {
-            for (int i = 0; i < FRET_COUNT - index + 3; i++) {
-                result.append(".");
-            }
-        }
+    private StringBuilder printEmptyBoard() {
+        StringBuilder result = new StringBuilder();
 
-        result.append("|");
+        firstString.print(result, stringHeaderLength);
+        secondString.print(result, stringHeaderLength);
+        thirdString.print(result, stringHeaderLength);
+        fourthString.print(result, stringHeaderLength);
+        fifthString.print(result, stringHeaderLength);
+        sixthString.print(result, stringHeaderLength);
+
+        return result;
     }
 
-    private void printPadding(StringBuilder result, StringType string) {
-        for (int i = 0; i < stringHeaderLength - string.toString().length(); i++) {
-            result.append(" ");
+    private int stringNumber(StringType type) {
+        switch (type) {
+            case MiH:
+                return 1;
+            case Si:
+                return 2;
+            case Sol:
+                return 3;
+            case Re:
+                return 4;
+            case La:
+                return 5;
+            case MiL:
+                return 6;
+            default:
+                assert false;
+                return 0;
         }
     }
 
