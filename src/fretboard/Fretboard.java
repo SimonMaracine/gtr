@@ -3,7 +3,7 @@ package fretboard;
 import java.util.ArrayList;
 
 public class Fretboard {
-    public static final int FRET_COUNT = 16;
+    public static final int FRET_COUNT = 15;
 
     private final GString firstString = new GString(StringType.MiH);
     private final GString secondString = new GString(StringType.Si);
@@ -27,15 +27,24 @@ public class Fretboard {
 
         var notes = strNotes(string);
 
-        for (Note note : notes) {
-            int index = 0;
-            index += stringNumber(note.string()) * stringHeaderLength;
-            index += note.fret() * Fretboard.FRET_COUNT;
-            index += (stringNumber(note.string()) - 1) * Fretboard.FRET_COUNT * (Fretboard.FRET_COUNT + 3);
-            index += note.fret() * (Fretboard.FRET_COUNT - 1);
+        // System.out.println(notes);
 
-            result.setCharAt(index, note.note().toString().charAt(0));
-        }
+        // for (Note note : notes) {
+            Note note = new Note(NoteType.Re, 3, StringType.Re);
+            int index = 0;
+            index += note.string().ordinal() * (
+                stringHeaderLength + Fretboard.FRET_COUNT + 1 + 1 + (Fretboard.FRET_COUNT * (3 + Fretboard.FRET_COUNT + 3 - 1)) / 2
+            );
+            // index += 
+
+            // index += note.fret() * (Fretboard.FRET_COUNT + 1);
+            // index += note.string().ordinal() * note.fret() * (Fretboard.FRET_COUNT + 3 - note.fret());
+            // index += note.fret() * (Fretboard.FRET_COUNT - 1);
+
+            if (note.fret() > 0) {
+                result.setCharAt(index, '*');
+            }
+        // }
 
         return result.toString();
     }
@@ -88,26 +97,6 @@ public class Fretboard {
         sixthString.print(result, stringHeaderLength);
 
         return result;
-    }
-
-    private int stringNumber(StringType type) {
-        switch (type) {
-            case MiH:
-                return 1;
-            case Si:
-                return 2;
-            case Sol:
-                return 3;
-            case Re:
-                return 4;
-            case La:
-                return 5;
-            case MiL:
-                return 6;
-            default:
-                assert false;
-                return 0;
-        }
     }
 
     private int getStringHeaderLength() {

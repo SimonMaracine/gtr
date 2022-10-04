@@ -28,37 +28,37 @@ public class GString {
         switch (type) {
             case MiH: {
                 NoteType lastNoteType = NoteType.Mi;
-                calculate(notes, lastNoteType);
+                calculate(notes, lastNoteType, NoteType.Mi);
 
                 break;
             }
             case Si: {
                 NoteType lastNoteType = NoteType.Si;
-                calculate(notes, lastNoteType);
+                calculate(notes, lastNoteType, NoteType.Si);
 
                 break;
             }
             case Sol: {
                 NoteType lastNoteType = NoteType.Sol;
-                calculate(notes, lastNoteType);
+                calculate(notes, lastNoteType, NoteType.Sol);
 
                 break;
             }
             case Re: {
                 NoteType lastNoteType = NoteType.Re;
-                calculate(notes, lastNoteType);
+                calculate(notes, lastNoteType, NoteType.Re);
 
                 break;
             }
             case La: {
                 NoteType lastNoteType = NoteType.La;
-                calculate(notes, lastNoteType);
+                calculate(notes, lastNoteType, NoteType.La);
 
                 break;
             }
             case MiL: {
                 NoteType lastNoteType = NoteType.Mi;
-                calculate(notes, lastNoteType);
+                calculate(notes, lastNoteType, NoteType.Mi);
 
                 break;
             }
@@ -83,9 +83,9 @@ public class GString {
         }
     }
 
-    private void calculate(ArrayList<Note> notes, NoteType lastNoteType) {
+    private void calculate(ArrayList<Note> notes, NoteType lastNoteType, NoteType note) {
         for (int i = 0; i < Fretboard.FRET_COUNT; i++) {
-            if (lastNoteType == NoteType.Mi) {
+            if (lastNoteType == note) {
                 notes.add(new Note(lastNoteType, i, type));
             }
 
