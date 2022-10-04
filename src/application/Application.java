@@ -16,8 +16,7 @@ public class Application {
 
     public void run(String[] args) {
         if (args.length == 0) {
-            System.err.println("No args provided to program");
-            System.exit(1);
+            throw new NoArgsProvidedException("No arguments provided");
         }
 
         for (Command command : commands) {
@@ -27,7 +26,9 @@ public class Application {
             }
         }
 
-        System.err.println("Invalid command: '" + args[0] + "'");
-        System.exit(1);
+        throw new InvalidArgException(
+            "Invalid command `" + args[0] + "`",
+            args[0]
+        );
     }
 }

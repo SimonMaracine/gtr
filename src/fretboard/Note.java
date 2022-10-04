@@ -6,7 +6,7 @@ public class Note {
     public StringType string;
 
     public Note(NoteType note, int fret, StringType string) {
-        assert fret <= Fretboard.FRET_COUNT;
+        assert fret <= Fretboard.MAX_FRET_COUNT;
 
         this.note = note;
         this.fret = fret;

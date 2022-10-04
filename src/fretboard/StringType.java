@@ -1,9 +1,13 @@
 package fretboard;
 
 public enum StringType {
-    MiH, Si, Sol, Re, La, MiL
+    MI_H, SI, SOL, RE, LA, MI_L;
 
-    public StringType parse(String input) {
-        
+    public static StringType parse(String input) {
+        input = input.trim().toUpperCase();
+
+        var instance = StringType.valueOf(input);
+
+        return instance;
     }
 }

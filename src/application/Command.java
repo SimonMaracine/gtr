@@ -3,9 +3,9 @@ package application;
 import java.util.ArrayList;
 
 public abstract class Command {
-    private String name;
-    private int argumentCount;
-    private String alternativeName;
+    protected String name;
+    protected int argumentCount;
+    protected String alternativeName;
 
     protected Command(String name, int argumentCount) {
         this.name = name;
@@ -35,9 +35,12 @@ public abstract class Command {
     protected void validateArgCount(ArrayList<String> args) {
         assert args.get(0) != name;
 
-        if (args.size() - 1 != argumentCount) {
-            throw new InvalidArgsException(
-                "Invalid argument count '" + (args.size() - 1) + "', expected '" + argumentCount + "'"
+        final int actualCount = args.size() - 1;
+
+        if (actualCount != argumentCount) {
+            throw new InvalidArgCountException(
+                "Invalid argument count `" + actualCount + "`, expected `" + argumentCount + "`",
+                actualCount
             );
         }
     }

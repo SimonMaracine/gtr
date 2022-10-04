@@ -16,9 +16,11 @@ public class GString {
     public void print(StringBuilder result, int stringHeaderLength) {
         result.append(type.toString());
         printPadding(result, stringHeaderLength);
-        for (int i = 0; i <= Fretboard.FRET_COUNT; i++) {
+
+        for (int i = 0; i <= Fretboard.MAX_FRET_COUNT; i++) {
             printFret(result, i);
         }
+
         result.append('\n');
     }
 
@@ -26,29 +28,23 @@ public class GString {
         ArrayList<Note> notes = new ArrayList<>();
 
         switch (type) {
-            case MiH:
-                calculate(notes, NoteType.Mi, note);
-
+            case MI_H:
+                calculate(notes, NoteType.MI, note);
                 break;
-            case Si:
-                calculate(notes, NoteType.Si, note);
-
+            case SI:
+                calculate(notes, NoteType.SI, note);
                 break;
-            case Sol:
-                calculate(notes, NoteType.Sol, note);
-
+            case SOL:
+                calculate(notes, NoteType.SOL, note);
                 break;
-            case Re:
-                calculate(notes, NoteType.Re, note);
-
+            case RE:
+                calculate(notes, NoteType.RE, note);
                 break;
-            case La:
-                calculate(notes, NoteType.La, note);
-
+            case LA:
+                calculate(notes, NoteType.LA, note);
                 break;
-            case MiL:
-                calculate(notes, NoteType.Mi, note);
-
+            case MI_L:
+                calculate(notes, NoteType.MI, note);
                 break;
             default:
                 assert false;
@@ -59,18 +55,18 @@ public class GString {
 
     public Note getNote(int fret) {
         switch (type) {
-            case MiH:
-                return calculate(NoteType.Mi, fret);
-            case Si:
-                return calculate(NoteType.Si, fret);
-            case Sol:
-                return calculate(NoteType.Sol, fret);
-            case Re:
-                return calculate(NoteType.Re, fret);
-            case La:
-                return calculate(NoteType.La, fret);
-            case MiL:
-                return calculate(NoteType.Mi, fret);
+            case MI_H:
+                return calculate(NoteType.MI, fret);
+            case SI:
+                return calculate(NoteType.SI, fret);
+            case SOL:
+                return calculate(NoteType.SOL, fret);
+            case RE:
+                return calculate(NoteType.RE, fret);
+            case LA:
+                return calculate(NoteType.LA, fret);
+            case MI_L:
+                return calculate(NoteType.MI, fret);
             default:
                 assert false;
                 return null;
@@ -79,7 +75,7 @@ public class GString {
 
     private void printFret(StringBuilder result, int index) {
         if (index > 0) {
-            for (int i = 0; i < Fretboard.FRET_COUNT - index + Fretboard.FRET_LENGTH; i++) {
+            for (int i = 0; i < Fretboard.MAX_FRET_COUNT - index + Fretboard.FRET_LENGTH; i++) {
                 result.append(".");
             }
         }
@@ -94,7 +90,7 @@ public class GString {
     }
 
     private void calculate(ArrayList<Note> notes, NoteType lastNoteType, NoteType note) {
-        for (int i = 0; i < Fretboard.FRET_COUNT; i++) {
+        for (int i = 0; i < Fretboard.MAX_FRET_COUNT; i++) {
             if (lastNoteType == note) {
                 notes.add(new Note(lastNoteType, i, type));
             }
@@ -112,44 +108,44 @@ public class GString {
     }
 
     private NoteType nextNote(NoteType note) {
-        NoteType result = NoteType.None;
+        NoteType result = null;
 
         switch (note) {
-            case Do:
-                result = NoteType.DoD;
+            case DO:
+                result = NoteType.DO_D;
                 break;
-            case DoD:
-                result = NoteType.Re;
+            case DO_D:
+                result = NoteType.RE;
                 break;
-            case Re:
-                result = NoteType.ReD;
+            case RE:
+                result = NoteType.RE_D;
                 break;
-            case ReD:
-                result = NoteType.Mi;
+            case RE_D:
+                result = NoteType.MI;
                 break;
-            case Mi:
-                result = NoteType.Fa;
+            case MI:
+                result = NoteType.FA;
                 break;
-            case Fa:
-                result = NoteType.FaD;
+            case FA:
+                result = NoteType.FA_D;
                 break;
-            case FaD:
-                result = NoteType.Sol;
+            case FA_D:
+                result = NoteType.SOL;
                 break;
-            case Sol:
-                result = NoteType.SolD;
+            case SOL:
+                result = NoteType.SOL_D;
                 break;
-            case SolD:
-                result = NoteType.La;
+            case SOL_D:
+                result = NoteType.LA;
                 break;
-            case La:
-                result = NoteType.LaD;
+            case LA:
+                result = NoteType.LA_D;
                 break;
-            case LaD:
-                result = NoteType.Si;
+            case LA_D:
+                result = NoteType.SI;
                 break;
-            case Si:
-                result = NoteType.Do;
+            case SI:
+                result = NoteType.DO;
                 break;
             default:
                 assert false;

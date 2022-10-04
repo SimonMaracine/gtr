@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 import application.Command;
+import application.InvalidArgCountException;
 import fretboard.Fretboard;
-import fretboard.NoteType;
 
 public class Show extends Command {
     Show() {
@@ -11,9 +11,14 @@ public class Show extends Command {
 
     @Override
     public void execute(ArrayList<String> args) {
-        validateArgCount(args);
+        try {
+            validateArgCount(args);
+        } catch (InvalidArgCountException e) {
+            System.err.println("gtr: invalid argument count `" + e.getArgCount() + "`, expected `" + argumentCount + "`");
+            System.exit(1);
+        }
 
         Fretboard fretboard = new Fretboard();
-        System.out.println(fretboard.print());
+        System.out.println(fretboard);
     }
 }

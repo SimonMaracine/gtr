@@ -3,15 +3,15 @@ package fretboard;
 import java.util.ArrayList;
 
 public class Fretboard {
-    public static final int FRET_COUNT = 15;
+    public static final int MAX_FRET_COUNT = 15;
     public static final int FRET_LENGTH = 3;
 
-    private final GString firstString = new GString(StringType.MiH);
-    private final GString secondString = new GString(StringType.Si);
-    private final GString thirdString = new GString(StringType.Sol);
-    private final GString fourthString = new GString(StringType.Re);
-    private final GString fifthString = new GString(StringType.La);
-    private final GString sixthString = new GString(StringType.MiL);
+    private final GString firstString = new GString(StringType.MI_H);
+    private final GString secondString = new GString(StringType.SI);
+    private final GString thirdString = new GString(StringType.SOL);
+    private final GString fourthString = new GString(StringType.RE);
+    private final GString fifthString = new GString(StringType.LA);
+    private final GString sixthString = new GString(StringType.MI_L);
 
     private int stringHeaderLength;
 
@@ -19,7 +19,8 @@ public class Fretboard {
         stringHeaderLength = getStringHeaderLength();
     }
 
-    public String print() {
+    @Override
+    public String toString() {
         return printEmptyFretboard().toString();
     }
 
@@ -45,22 +46,22 @@ public class Fretboard {
         String result = "";
 
         switch (string) {
-            case MiH:
+            case MI_H:
                 result += firstString.getNote(fret).note;
                 break;
-            case Si:
+            case SI:
                 result += secondString.getNote(fret).note;
                 break;
-            case Sol:
+            case SOL:
                 result += thirdString.getNote(fret).note;
                 break;
-            case Re:
+            case RE:
                 result += fourthString.getNote(fret).note;
                 break;
-            case La:
+            case LA:
                 result += fifthString.getNote(fret).note;
                 break;
-            case MiL:
+            case MI_L:
                 result += sixthString.getNote(fret).note;
                 break;
             default:
@@ -72,17 +73,17 @@ public class Fretboard {
 
     private ArrayList<Note> getStrNotes(StringType string, NoteType note) {
         switch (string) {
-            case MiH:
+            case MI_H:
                 return firstString.getNotes(note);
-            case Si:
+            case SI:
                 return secondString.getNotes(note);
-            case Sol:
+            case SOL:
                 return thirdString.getNotes(note);
-            case Re:
+            case RE:
                 return fourthString.getNotes(note);
-            case La:
+            case LA:
                 return fifthString.getNotes(note);
-            case MiL:
+            case MI_L:
                 return sixthString.getNotes(note);
             default:
                 assert false;
@@ -107,10 +108,12 @@ public class Fretboard {
         for (Note note : notes) {
             int index = 0;
             index += note.string.ordinal() * (
-                stringHeaderLength + FRET_COUNT + 1 + 1 + (FRET_COUNT * (FRET_LENGTH + FRET_COUNT + FRET_LENGTH - 1)) / 2
+                stringHeaderLength + MAX_FRET_COUNT + 1 + 1 + (
+                    (MAX_FRET_COUNT * (FRET_LENGTH + MAX_FRET_COUNT + FRET_LENGTH - 1)) / 2
+                )
             );
             index += stringHeaderLength - 2 + (
-                (note.fret * (2 * (FRET_COUNT + FRET_LENGTH - 1 + 1) + (note.fret - 1) * -1)) / 2
+                (note.fret * (2 * (MAX_FRET_COUNT + FRET_LENGTH - 1 + 1) + (note.fret - 1) * -1)) / 2
             );
 
             if (note.fret > 0) {
@@ -135,14 +138,15 @@ public class Fretboard {
     private int getStringHeaderLength() {
         int result = 0;
 
-        final GString[] strings = {
+        final GString[] STRINGS = {
             firstString, secondString, thirdString, fourthString, fifthString, sixthString
         };
+        final int SPACE = 1;
 
         for (int i = 0; i < 6; i++) {
-            result = Math.max(result, strings[i].getType().toString().length());
+            result = Math.max(result, STRINGS[i].getType().toString().length());
         }
 
-        return result + 1;
+        return result + SPACE;
     }
 }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import application.Command;
+import application.InvalidArgCountException;
 
 public class Menu extends Command {
     Menu() {
@@ -9,6 +10,11 @@ public class Menu extends Command {
 
     @Override
     public void execute(ArrayList<String> args) {
-        validateArgCount(args);
+        try {
+            validateArgCount(args);
+        } catch (InvalidArgCountException e) {
+            System.err.println("gtr: invalid argument count `" + e.getArgCount() + "`, expected `" + argumentCount + "`");
+            System.exit(1);
+        }
     }
 }

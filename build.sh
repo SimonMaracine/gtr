@@ -5,7 +5,10 @@ clear
 sources=(
     "src/application/Command.java"
     "src/application/Application.java"
-    "src/application/InvalidArgsException.java"
+    "src/application/ArgsException.java"
+    "src/application/InvalidArgException.java"
+    "src/application/InvalidArgCountException.java"
+    "src/application/NoArgsProvidedException.java"
     "src/Main.java"
     "src/Help.java"
     "src/Version.java"
