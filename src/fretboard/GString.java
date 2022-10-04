@@ -75,18 +75,16 @@ public class GString {
 
     private void printFret(StringBuilder result, int index) {
         if (index > 0) {
-            for (int i = 0; i < Fretboard.MAX_FRET_COUNT - index + Fretboard.FRET_LENGTH; i++) {
-                result.append(".");
-            }
+            final int repeat = Fretboard.MAX_FRET_COUNT - index + Fretboard.FRET_LENGTH;
+            result.append(".".repeat(repeat));
         }
 
         result.append("|");
     }
 
     private void printPadding(StringBuilder result, int stringHeaderLength) {
-        for (int i = 0; i < stringHeaderLength - type.toString().length(); i++) {
-            result.append(" ");
-        }
+        final int repeat = stringHeaderLength - type.toString().length();
+        result.append(" ".repeat(repeat));
     }
 
     private void calculate(ArrayList<Note> notes, NoteType lastNoteType, NoteType note) {

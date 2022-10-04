@@ -132,7 +132,41 @@ public class Fretboard {
         fifthString.print(result, stringHeaderLength);
         sixthString.print(result, stringHeaderLength);
 
+        printLabels(result);
+
         return result;
+    }
+
+    private void printLabels(StringBuilder result) {
+        result.append(" ".repeat(stringHeaderLength));
+
+        for (int i = 0; i < Fretboard.MAX_FRET_COUNT; i++) {
+            if (i > 0) {
+                final int repeat = Fretboard.MAX_FRET_COUNT - i + Fretboard.FRET_LENGTH;
+                result.append(" ".repeat(repeat));
+            }
+
+            switch (i) {
+                case 3:
+                    result.append('3');
+                    break;
+                case 5:
+                    result.append('5');
+                    break;
+                case 7:
+                    result.append('7');
+                    break;
+                case 9:
+                    result.append('9');
+                    break;
+                case 12:
+                    result.append("12");
+                    break;
+                default:
+                    result.append(' ');
+                    break;
+            }
+        }
     }
 
     private int getStringHeaderLength() {
