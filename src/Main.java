@@ -8,6 +8,7 @@ public class Main {
         app.addCommand(new AllNotes());
         app.addCommand(new StrNotes());
         app.addCommand(new WhichNote());
+        app.addCommand(new Show());
         app.addCommand(new Menu());
         app.run(args);
     }

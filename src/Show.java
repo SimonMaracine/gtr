@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 import application.Command;
 import fretboard.Fretboard;
-import fretboard.StringType;
+import fretboard.NoteType;
 
-public class WhichNote extends Command {
-    WhichNote() {
-        super("--which-note", 0, "-w");
+public class Show extends Command {
+    Show() {
+        super("--show", 0, "-o");
     }
 
     @Override
@@ -14,6 +14,6 @@ public class WhichNote extends Command {
         validateArgCount(args);
 
         Fretboard fretboard = new Fretboard();
-        System.out.println(fretboard.whichNote(StringType.La, 7));
+        System.out.println(fretboard.print());
     }
 }

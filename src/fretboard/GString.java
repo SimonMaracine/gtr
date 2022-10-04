@@ -22,54 +22,64 @@ public class GString {
         result.append('\n');
     }
 
-    public ArrayList<Note> getNotes() {
+    public ArrayList<Note> getNotes(NoteType note) {
         ArrayList<Note> notes = new ArrayList<>();
 
         switch (type) {
-            case MiH: {
-                NoteType lastNoteType = NoteType.Mi;
-                calculate(notes, lastNoteType, NoteType.Mi);
+            case MiH:
+                calculate(notes, NoteType.Mi, note);
 
                 break;
-            }
-            case Si: {
-                NoteType lastNoteType = NoteType.Si;
-                calculate(notes, lastNoteType, NoteType.Si);
+            case Si:
+                calculate(notes, NoteType.Si, note);
 
                 break;
-            }
-            case Sol: {
-                NoteType lastNoteType = NoteType.Sol;
-                calculate(notes, lastNoteType, NoteType.Sol);
+            case Sol:
+                calculate(notes, NoteType.Sol, note);
 
                 break;
-            }
-            case Re: {
-                NoteType lastNoteType = NoteType.Re;
-                calculate(notes, lastNoteType, NoteType.Re);
+            case Re:
+                calculate(notes, NoteType.Re, note);
 
                 break;
-            }
-            case La: {
-                NoteType lastNoteType = NoteType.La;
-                calculate(notes, lastNoteType, NoteType.La);
+            case La:
+                calculate(notes, NoteType.La, note);
 
                 break;
-            }
-            case MiL: {
-                NoteType lastNoteType = NoteType.Mi;
-                calculate(notes, lastNoteType, NoteType.Mi);
+            case MiL:
+                calculate(notes, NoteType.Mi, note);
 
                 break;
-            }
+            default:
+                assert false;
         }
 
         return notes;
     }
 
+    public Note getNote(int fret) {
+        switch (type) {
+            case MiH:
+                return calculate(NoteType.Mi, fret);
+            case Si:
+                return calculate(NoteType.Si, fret);
+            case Sol:
+                return calculate(NoteType.Sol, fret);
+            case Re:
+                return calculate(NoteType.Re, fret);
+            case La:
+                return calculate(NoteType.La, fret);
+            case MiL:
+                return calculate(NoteType.Mi, fret);
+            default:
+                assert false;
+                return null;
+        }
+    }
+
     private void printFret(StringBuilder result, int index) {
         if (index > 0) {
-            for (int i = 0; i < Fretboard.FRET_COUNT - index + 3; i++) {
+            for (int i = 0; i < Fretboard.FRET_COUNT - index + Fretboard.FRET_LENGTH; i++) {
                 result.append(".");
             }
         }
@@ -91,6 +101,14 @@ public class GString {
 
             lastNoteType = nextNote(lastNoteType);
         }
+    }
+
+    private Note calculate(NoteType lastNoteType, int fret) {
+        for (int i = 0; i < fret; i++) {
+            lastNoteType = nextNote(lastNoteType);
+        }
+
+        return new Note(lastNoteType, fret, type);
     }
 
     private NoteType nextNote(NoteType note) {

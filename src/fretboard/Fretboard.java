@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Fretboard {
     public static final int FRET_COUNT = 15;
+    public static final int FRET_LENGTH = 3;
 
     private final GString firstString = new GString(StringType.MiH);
     private final GString secondString = new GString(StringType.Si);
@@ -19,74 +20,106 @@ public class Fretboard {
     }
 
     public String print() {
-        return printEmptyBoard().toString();
+        return printEmptyFretboard().toString();
     }
 
-    public String printStrNotes(StringType string) {
-        StringBuilder result = printEmptyBoard();
+    public String strNotes(StringType string, NoteType note) {
+        StringBuilder result = printEmptyFretboard();
 
-        var notes = strNotes(string);
-
-        // System.out.println(notes);
-
-        // for (Note note : notes) {
-            Note note = new Note(NoteType.Re, 3, StringType.Re);
-            int index = 0;
-            index += note.string().ordinal() * (
-                stringHeaderLength + Fretboard.FRET_COUNT + 1 + 1 + (Fretboard.FRET_COUNT * (3 + Fretboard.FRET_COUNT + 3 - 1)) / 2
-            );
-            // index += 
-
-            // index += note.fret() * (Fretboard.FRET_COUNT + 1);
-            // index += note.string().ordinal() * note.fret() * (Fretboard.FRET_COUNT + 3 - note.fret());
-            // index += note.fret() * (Fretboard.FRET_COUNT - 1);
-
-            if (note.fret() > 0) {
-                result.setCharAt(index, '*');
-            }
-        // }
+        var notes = getStrNotes(string, note);
+        fillFretboard(notes, result);
 
         return result.toString();
     }
 
-    public String printAllNotes() {
-        return null;
+    public String allNotes(NoteType note) {
+        StringBuilder result = printEmptyFretboard();
+
+        var notes = getAllNotes(note);
+        fillFretboard(notes, result);
+
+        return result.toString();
     }
 
-    private ArrayList<Note> strNotes(StringType string) {
+    public String whichNote(StringType string, int fret) {
+        String result = "";
+
         switch (string) {
             case MiH:
-                return firstString.getNotes();
+                result += firstString.getNote(fret).note;
+                break;
             case Si:
-                return secondString.getNotes();
+                result += secondString.getNote(fret).note;
+                break;
             case Sol:
-                return thirdString.getNotes();
+                result += thirdString.getNote(fret).note;
+                break;
             case Re:
-                return fourthString.getNotes();
+                result += fourthString.getNote(fret).note;
+                break;
             case La:
-                return fifthString.getNotes();
+                result += fifthString.getNote(fret).note;
+                break;
             case MiL:
-                return sixthString.getNotes();
+                result += sixthString.getNote(fret).note;
+                break;
+            default:
+                assert false;
+        }
+
+        return result;
+    }
+
+    private ArrayList<Note> getStrNotes(StringType string, NoteType note) {
+        switch (string) {
+            case MiH:
+                return firstString.getNotes(note);
+            case Si:
+                return secondString.getNotes(note);
+            case Sol:
+                return thirdString.getNotes(note);
+            case Re:
+                return fourthString.getNotes(note);
+            case La:
+                return fifthString.getNotes(note);
+            case MiL:
+                return sixthString.getNotes(note);
             default:
                 assert false;
                 return null;
         }
     }
 
-    private ArrayList<Note> allNotes() {
+    private ArrayList<Note> getAllNotes(NoteType note) {
         ArrayList<Note> notes = new ArrayList<>();
 
-        notes.addAll(firstString.getNotes());
-        notes.addAll(secondString.getNotes());
-        notes.addAll(thirdString.getNotes());
-        notes.addAll(fourthString.getNotes());
-        notes.addAll(fifthString.getNotes());
-        notes.addAll(sixthString.getNotes());
+        notes.addAll(firstString.getNotes(note));
+        notes.addAll(secondString.getNotes(note));
+        notes.addAll(thirdString.getNotes(note));
+        notes.addAll(fourthString.getNotes(note));
+        notes.addAll(fifthString.getNotes(note));
+        notes.addAll(sixthString.getNotes(note));
 
         return notes;
     }
 
-    private StringBuilder printEmptyBoard() {
+    private void fillFretboard(ArrayList<Note> notes, StringBuilder result) {
+        for (Note note : notes) {
+            int index = 0;
+            index += note.string.ordinal() * (
+                stringHeaderLength + FRET_COUNT + 1 + 1 + (FRET_COUNT * (FRET_LENGTH + FRET_COUNT + FRET_LENGTH - 1)) / 2
+            );
+            index += stringHeaderLength - 2 + (
+                (note.fret * (2 * (FRET_COUNT + FRET_LENGTH - 1 + 1) + (note.fret - 1) * -1)) / 2
+            );
+
+            if (note.fret > 0) {
+                result.setCharAt(index, '*');
+            }
+        }
+    }
+
+    private StringBuilder printEmptyFretboard() {
         StringBuilder result = new StringBuilder();
 
         firstString.print(result, stringHeaderLength);

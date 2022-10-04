@@ -12,6 +12,7 @@ sources=(
     "src/AllNotes.java"
     "src/StrNotes.java"
     "src/WhichNote.java"
+    "src/Show.java"
     "src/Menu.java"
     "src/fretboard/Fretboard.java"
     "src/fretboard/GString.java"

@@ -32,7 +32,7 @@ public abstract class Command {
         return alternativeName;
     }
 
-    protected void validateArgs(ArrayList<String> args) {
+    protected void validateArgCount(ArrayList<String> args) {
         assert args.get(0) != name;
 
         if (args.size() - 1 != argumentCount) {

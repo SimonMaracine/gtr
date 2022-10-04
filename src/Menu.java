@@ -9,6 +9,6 @@ public class Menu extends Command {
 
     @Override
     public void execute(ArrayList<String> args) {
-        validateArgs(args);
+        validateArgCount(args);
     }
 }
