@@ -1,8 +1,10 @@
 #! /bin/bash
 
-sources=$(tree out/ -if -F --noreport | grep .class)
+cd out
+sources=$(tree -if -F --noreport | grep .class)
 
 jar --create --file gtr.jar --main-class=Main ${sources[@]}
+cd ..
 
-mkdir bin/
-mv gtr.jar bin/gtr.jar
+mkdir -p bin/
+mv out/gtr.jar bin/gtr.jar
