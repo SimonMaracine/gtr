@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import application.Command;
 import application.InvalidArgCountException;
 
-public class Menu extends Command {
+public class Menu extends Command {  // TODO this should be removed
     Menu() {
         super("--menu", 0, "-m");
     }

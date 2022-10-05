@@ -24,7 +24,7 @@ public class Help extends Command {
         System.out.println("    gtr --str-notes <string> <note>");
         System.out.println("    gtr --which-note <string> <fret>");
         System.out.println("    gtr --show");
-        System.out.println("    gtr --menu");
+        System.out.println("    gtr --menu");  // TODO this should be removed
         System.out.println("    gtr --version");
         System.out.println("    gtr --help");
 
@@ -34,7 +34,7 @@ public class Help extends Command {
         System.out.println("    -s, --str-notes   Show all the places of a specfied note on a specified string");
         System.out.println("    -w, --which-note  Show which note lies on a specified string and fret");
         System.out.println("    -o, --show        Simply show the fretboard");
-        System.out.println("    -m, --menu        n/a");  // TODO this
+        System.out.println("    -m, --menu        n/a");  // TODO this should be removed
         System.out.println("    -v, --version     Print version of gtr");
         System.out.println("    -h, --help        Print usage information");
 
