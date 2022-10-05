@@ -2,9 +2,12 @@ package fretboard;
 
 import java.util.ArrayList;
 
+/**
+ * Class representing a guitar fretboard
+ */
 public class Fretboard {
-    public static final int MAX_FRET_COUNT = 15;
-    public static final int FRET_LENGTH = 3;
+    public static final int MAX_FRET_COUNT = 15;  // Maximum amount of frets printed
+    public static final int FRET_WIDTH = 3;  // Base fret width (smallest one is only 3 characters wide)
 
     private final GString firstString = new GString(StringType.MI_H);
     private final GString secondString = new GString(StringType.SI);
@@ -13,7 +16,7 @@ public class Fretboard {
     private final GString fifthString = new GString(StringType.LA);
     private final GString sixthString = new GString(StringType.MI_L);
 
-    private int stringHeaderLength;
+    private int stringHeaderLength;  // Calculated in constructor
 
     public Fretboard() {
         stringHeaderLength = getStringHeaderLength();
@@ -24,6 +27,9 @@ public class Fretboard {
         return printEmptyFretboard().toString();
     }
 
+    /**
+     * Method implementing the main logic of --str-notes command
+     */
     public String strNotes(StringType string, NoteType note) {
         StringBuilder result = printEmptyFretboard();
 
@@ -33,6 +39,9 @@ public class Fretboard {
         return result.toString();
     }
 
+    /**
+     * Method implementing the main logic of --all-notes command
+     */
     public String allNotes(NoteType note) {
         StringBuilder result = printEmptyFretboard();
 
@@ -42,6 +51,9 @@ public class Fretboard {
         return result.toString();
     }
 
+    /**
+     * Method implementing the main logic of --which-note command
+     */
     public String whichNote(StringType string, int fret) {
         String result = "";
 
@@ -71,6 +83,9 @@ public class Fretboard {
         return result;
     }
 
+    /**
+     * Helper method to return the list of notes used by --str-notes
+     */
     private ArrayList<Note> getStrNotes(StringType string, NoteType note) {
         switch (string) {
             case MI_H:
@@ -91,6 +106,9 @@ public class Fretboard {
         }
     }
 
+    /**
+     * Helper method to return the list of notes used by --all-notes
+     */
     private ArrayList<Note> getAllNotes(NoteType note) {
         ArrayList<Note> notes = new ArrayList<>();
 
@@ -104,16 +122,19 @@ public class Fretboard {
         return notes;
     }
 
+    /**
+     * Method to fill an empty fretboard with notes
+     */
     private void fillFretboard(ArrayList<Note> notes, StringBuilder result) {
         for (Note note : notes) {
             int index = 0;
             index += note.string.ordinal() * (
                 stringHeaderLength + MAX_FRET_COUNT + 1 + 1 + (
-                    (MAX_FRET_COUNT * (FRET_LENGTH + MAX_FRET_COUNT + FRET_LENGTH - 1)) / 2
+                    (MAX_FRET_COUNT * (FRET_WIDTH + MAX_FRET_COUNT + FRET_WIDTH - 1)) / 2
                 )
             );
             index += stringHeaderLength - 2 + (
-                (note.fret * (2 * (MAX_FRET_COUNT + FRET_LENGTH - 1 + 1) + (note.fret - 1) * -1)) / 2
+                (note.fret * (2 * (MAX_FRET_COUNT + FRET_WIDTH - 1 + 1) + (note.fret - 1) * -1)) / 2
             );
 
             if (note.fret > 0) {
@@ -122,6 +143,9 @@ public class Fretboard {
         }
     }
 
+    /**
+     * Method to create an empty fretboard ready to be filled with notes
+     */
     private StringBuilder printEmptyFretboard() {
         StringBuilder result = new StringBuilder();
 
@@ -137,12 +161,15 @@ public class Fretboard {
         return result;
     }
 
+    /**
+     * Helper method to print fret labels bellow the fretboard
+     */
     private void printLabels(StringBuilder result) {
         result.append(" ".repeat(stringHeaderLength));
 
         for (int i = 0; i < Fretboard.MAX_FRET_COUNT; i++) {
             if (i > 0) {
-                final int repeat = Fretboard.MAX_FRET_COUNT - i + Fretboard.FRET_LENGTH;
+                final int repeat = Fretboard.MAX_FRET_COUNT - i + Fretboard.FRET_WIDTH;
                 result.append(" ".repeat(repeat));
             }
 
@@ -169,6 +196,9 @@ public class Fretboard {
         }
     }
 
+    /**
+     * Method that calculates the header length, used in the constructor
+     */
     private int getStringHeaderLength() {
         int result = 0;
 

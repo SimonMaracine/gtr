@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 import application.Command;
 import application.InvalidArgCountException;
+import fretboard.StringType;
+import fretboard.NoteType;
 
 public class Help extends Command {
     Help() {
@@ -17,7 +19,7 @@ public class Help extends Command {
             System.exit(1);
         }
 
-        System.out.println("usage: ");
+        System.out.println("usage:");
         System.out.println("    gtr --all-notes <note>");
         System.out.println("    gtr --str-notes <string> <note>");
         System.out.println("    gtr --which-note <string> <fret>");
@@ -37,6 +39,51 @@ public class Help extends Command {
         System.out.println("    -h, --help        Print usage information");
 
         System.out.println();
+        System.out.println("strings and notes:");
+        printPossibleStrings();
+        printPossibleNotes();
+
+        System.out.println();
         System.out.println("Program made by Simon Mărăcine - simonmara.dev@gmail.com");
+    }
+
+    /**
+     * Helper method to automatically print all the possible strings that can be passed as an argument
+     */
+    private void printPossibleStrings() {
+        StringBuilder result = new StringBuilder();
+        result.append("    ");
+
+        final var values = StringType.values();
+
+        for (int i = 0; i < values.length; i++) {
+            result.append(values[i].toString());
+
+            if (i != values.length - 1) {
+                result.append(", ");
+            }
+        }
+
+        System.out.println(result);
+    }
+
+    /**
+     * Helper method to automatically print all the possible notes that can be passed as an argument
+     */
+    private void printPossibleNotes() {  // TODO can these methods be merged into one?
+        StringBuilder result = new StringBuilder();
+        result.append("    ");
+
+        final var values = NoteType.values();
+
+        for (int i = 0; i < values.length; i++) {
+            result.append(values[i].toString());
+
+            if (i != values.length - 1) {
+                result.append(", ");
+            }
+        }
+
+        System.out.println(result);
     }
 }

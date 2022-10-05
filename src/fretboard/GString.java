@@ -2,6 +2,9 @@ package fretboard;
 
 import java.util.ArrayList;
 
+/**
+ * Class representing a guitar string
+ */
 public class GString {
     private StringType type;
 
@@ -13,6 +16,9 @@ public class GString {
         return type;
     }
 
+    /**
+     * Method to print an entire string into a StringBuilder
+     */
     public void print(StringBuilder result, int stringHeaderLength) {
         result.append(type.toString());
         printPadding(result, stringHeaderLength);
@@ -24,6 +30,9 @@ public class GString {
         result.append('\n');
     }
 
+    /**
+     * Method to get a list of notes of a specific type on this string
+     */
     public ArrayList<Note> getNotes(NoteType note) {
         ArrayList<Note> notes = new ArrayList<>();
 
@@ -53,6 +62,9 @@ public class GString {
         return notes;
     }
 
+    /**
+     * Method to get a note on a specific fret on this string
+     */
     public Note getNote(int fret) {
         switch (type) {
             case MI_H:
@@ -73,20 +85,29 @@ public class GString {
         }
     }
 
+    /**
+     * Helper method to print a fret into a StringBuilder
+     */
     private void printFret(StringBuilder result, int index) {
         if (index > 0) {
-            final int repeat = Fretboard.MAX_FRET_COUNT - index + Fretboard.FRET_LENGTH;
+            final int repeat = Fretboard.MAX_FRET_COUNT - index + Fretboard.FRET_WIDTH;
             result.append(".".repeat(repeat));
         }
 
         result.append("|");
     }
 
+    /**
+     * Helper method to print padding (in string header) into a StringBuilder
+     */
     private void printPadding(StringBuilder result, int stringHeaderLength) {
         final int repeat = stringHeaderLength - type.toString().length();
         result.append(" ".repeat(repeat));
     }
 
+    /**
+     * Helper method to calculate and insert all the notes of a specific type on this string
+     */
     private void calculate(ArrayList<Note> notes, NoteType lastNoteType, NoteType note) {
         for (int i = 0; i < Fretboard.MAX_FRET_COUNT; i++) {
             if (lastNoteType == note) {
@@ -97,6 +118,9 @@ public class GString {
         }
     }
 
+    /**
+     * Helper method to calculate and get a note on a specific fret on this string
+     */
     private Note calculate(NoteType lastNoteType, int fret) {
         for (int i = 0; i < fret; i++) {
             lastNoteType = nextNote(lastNoteType);
@@ -105,6 +129,9 @@ public class GString {
         return new Note(lastNoteType, fret, type);
     }
 
+    /**
+     * Helper method to get the next note
+     */
     private NoteType nextNote(NoteType note) {
         NoteType result = null;
 

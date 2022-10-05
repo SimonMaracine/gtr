@@ -1,5 +1,9 @@
 package fretboard;
 
+/**
+ * Class representing a note on the fretboard
+ * It's mainly a data-only class, a POD
+ */
 public class Note {
     public NoteType note;
     public int fret;
@@ -17,13 +21,13 @@ public class Note {
     public String toString() {
         StringBuilder result = new StringBuilder();
 
-        result.append("Note{");
-        result.append(note);
-        result.append(", ");
-        result.append(fret);
-        result.append(", ");
-        result.append(string);
-        result.append("}");
+        result.append("Note{")
+            .append(note)
+            .append(", ")
+            .append(fret)
+            .append(", ")
+            .append(string)
+            .append("}");
 
         return result.toString();
     }

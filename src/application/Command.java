@@ -2,6 +2,12 @@ package application;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract class representing a main command
+ * Must be subclassed and its logic implemented (`execute` method)
+ * You must pass a command name like `--version` or `install` and how many additional arguments that command expects
+ * Additionaly you can pass an alternative name for that command like `-v`
+ */
 public abstract class Command {
     protected String name;
     protected int argumentCount;
@@ -18,8 +24,6 @@ public abstract class Command {
         this.alternativeName = alternativeName;
     }
 
-    public abstract void execute(ArrayList<String> args);
-
     public String getName() {
         return name;
     }
@@ -32,6 +36,14 @@ public abstract class Command {
         return alternativeName;
     }
 
+    /**
+     * Implement this method in child class
+     */
+    public abstract void execute(ArrayList<String> args);
+
+    /**
+     * Use this method at the beginning of `execute` to validate arguments a bit
+     */
     protected void validateArgCount(ArrayList<String> args) {
         assert args.get(0) != name;
 
